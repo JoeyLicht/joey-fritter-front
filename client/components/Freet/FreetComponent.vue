@@ -13,14 +13,14 @@
         v-if="$store.state.username === freet.author"
         class="actions"
       >
-        <button
-          v-if="editing"
+        <button 
+          v-if="differentDraft"
           @click="submitEdit"
         >
           ✅ Save changes
         </button>
         <button
-          v-if="editing"
+          v-if="differentDraft"
           @click="stopEditing"
         >
           🚫 Discard changes
@@ -40,7 +40,7 @@
       v-if="editing"
       class="content"
       :value="draft"
-      @input="draft = $event.target.value"
+      @input="draft = $event.target.value; madeChanges()"
     />
     <p
       v-else
@@ -77,6 +77,7 @@ export default {
   data() {
     return {
       editing: false, // Whether or not this freet is in edit mode
+      differentDraft: false, //Whether an edit has been made when freet is in edit mode
       draft: this.freet.content, // Potentially-new content for this freet
       alerts: {} // Displays success/error messages encountered during freet modification
     };
@@ -94,6 +95,7 @@ export default {
        * Disables edit mode on this freet.
        */
       this.editing = false;
+      this.differentDraft = false;
       this.draft = this.freet.content;
     },
     deleteFreet() {
@@ -109,6 +111,17 @@ export default {
         }
       };
       this.request(params);
+    },
+    madeChanges() {
+      /**
+       * Assigns differentDraft boolean if change has been made from original content
+       */
+      if (this.freet.content !== this.draft) {
+        this.differentDraft = true; //change has been made
+      }
+      else {
+        this.differentDraft = false;
+      }
     },
     submitEdit() {
       /**
@@ -154,6 +167,7 @@ export default {
         }
 
         this.editing = false;
+        this.differentDraft = false;
         this.$store.commit('refreshFreets');
 
         params.callback();
