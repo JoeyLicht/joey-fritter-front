@@ -26,6 +26,12 @@
           🚫 Discard changes
         </button>
         <button
+          v-if="editing&&!differentDraft"
+          @click="stopEditing"
+        >
+          🚫 Leave Editing Mode
+        </button>
+        <button
           v-if="!editing"
           @click="startEditing"
         >
