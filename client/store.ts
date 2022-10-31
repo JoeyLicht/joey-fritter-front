@@ -34,7 +34,7 @@ const store = new Vuex.Store({
     updateFilter(state, filter) {
       /**
        * Update the stored freets filter to the specified one.
-       * @param filter - Username of the user to fitler freets by
+       * @param filter - Username of the user to filter freets by
        */
       state.filter = filter;
     },

@@ -40,7 +40,7 @@ const isLikeDeletable = async (req: Request, res: Response, next: NextFunction) 
   const like = await LikeCollection.findOneByContentIdAndUserId(req.params.contentId.toString(), req.session.userId.toString());
   if (!like) {
     res.status(404).json({
-      error: `User has not liked a freet with content id '${req.params.contentId}'`
+      error: 'Cannot unlike freet you do not currently like'
     });
     return;
   }
