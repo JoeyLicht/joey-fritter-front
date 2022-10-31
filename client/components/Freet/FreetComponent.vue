@@ -13,23 +13,15 @@
         v-if="$store.state.username === freet.author"
         class="actions"
       >
-        <button 
-          v-if="differentDraft"
-          @click="submitEdit"
-        >
-          ✅ Save changes
-        </button>
+        <button @click="deleteFreet">
+          🗑️ Delete
+        </button>  
+        
         <button
-          v-if="differentDraft"
+          v-if="editing"
           @click="stopEditing"
         >
           🚫 Discard changes
-        </button>
-        <button
-          v-if="editing&&!differentDraft"
-          @click="stopEditing"
-        >
-          🚫 Leave Editing Mode
         </button>
         <button
           v-if="!editing"
@@ -37,8 +29,11 @@
         >
           ✏️ Edit
         </button>
-        <button @click="deleteFreet">
-          🗑️ Delete
+        <button 
+          v-if="differentDraft"
+          @click="submitEdit"
+        >
+          ✅ Save changes
         </button>
       </div>
     </header>
