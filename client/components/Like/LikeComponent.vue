@@ -6,7 +6,7 @@
     class="like"
   >
     <p class="info">
-      TODO IN Component Number Likes: {{ numberLikes }}
+      Number Likes: {{ numLikes() }}
     </p>
     <button 
       v-if="$store.state.username !== freet.author"
@@ -34,7 +34,7 @@
 
 <script>
 export default {
-  name: 'FreetComponent',
+  name: 'LikeComponent',
   props: {
     // Data from the stored freet
     freet: {
@@ -44,19 +44,16 @@ export default {
   },
   data() {
     return {
-      numberLikes: this.numLikes(),
       alerts: {} // Displays success/error messages encountered during freet modification
     };
   },
   methods: {
     numLikes() {
       /**
-       * Return number of likes for a particular freet
+       * Update number of likes for a particular freet
        */
-      // const url = `/api/likes/${this.freet._id}`;
-      // const res = await fetch(url).then(async r => r.json());
-      // return res.length;
-      return Math.floor(Math.random() * 10)
+      const allLikes = this.$store.state.likes
+      return allLikes.filter(like => like.publishedContent._id === this.freet._id).length;
     },
     addLike() { //TODOOO make sure to refresh like count
       /**
@@ -127,10 +124,8 @@ export default {
           throw new Error(res.error);
         }
 
-        // this.editing = false;
-        // this.differentDraft = false;
-        // this.$store.commit('refreshLikes');
-        this.numberLikes = this.numLikes();
+        this.$store.commit('refreshLikes');
+        this.numLikes();
 
         params.callback();
       } catch (e) {

@@ -53,11 +53,8 @@
       Posted at {{ freet.dateModified }}
       <i v-if="freet.edited">(edited)</i>
     </p>
-    <p class="info">
-      TODO extract to component!! Number Likes: {{ numberLikes }}
-    </p>
     <section
-      v-if="$store.state.freets.length"
+      v-if="$store.state.username !== null"
     >
       <LikeComponent
         :freet="freet"
@@ -97,6 +94,9 @@ export default {
     };
   },
   methods: {
+    // handleInit() {
+
+    // },
     startEditing() {
       /**
        * Enables edit mode on this freet.
