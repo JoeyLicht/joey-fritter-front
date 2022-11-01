@@ -5,6 +5,12 @@
   <article
     class="like"
   >
+    <p 
+      v-if="$store.state.username === freet.author" 
+      class="num-likes"
+    >
+    ♥ {{ numLikes() }}
+    </p>
     <button 
       v-if="$store.state.username !== freet.author && ! existingLike()"
       @click="addLike"
