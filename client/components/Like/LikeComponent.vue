@@ -6,19 +6,19 @@
     class="like"
   >
     <p 
-      v-if="$store.state.username === freet.author" 
+      v-if="$store.state.username === freet.author || $store.state.username === null" 
       class="num-likes"
     >
-    ♥ {{ numLikes() }}
+      ♥ {{ numLikes() }}
     </p>
     <button 
-      v-if="$store.state.username !== freet.author && ! existingLike()"
+      v-if="$store.state.username !== freet.author && $store.state.username !== null && ! existingLike()"
       @click="addLike"
     >
       ♡ {{ numLikes() }}
     </button>
     <button 
-      v-if="$store.state.username !== freet.author && existingLike()"
+      v-if="$store.state.username !== freet.author && $store.state.username !== null && existingLike()"
       @click="removeLike"
     >
       ♥ {{ numLikes() }}

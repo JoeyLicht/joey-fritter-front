@@ -53,9 +53,7 @@
       Posted at {{ freet.dateModified }}
       <i v-if="freet.edited">(edited)</i>
     </p>
-    <section
-      v-if="$store.state.username !== null"
-    >
+    <section>
       <LikeComponent
         :freet="freet"
       />
