@@ -5,20 +5,17 @@
   <article
     class="like"
   >
-    <p class="info">
-      Number Likes: {{ numLikes() }}
-    </p>
     <button 
-      v-if="$store.state.username !== freet.author"
+      v-if="$store.state.username !== freet.author && ! existingLike()"
       @click="addLike"
     >
-      🧡   Like: TODO
+      ♡ {{ numLikes() }}
     </button>
     <button 
-      v-if="$store.state.username !== freet.author"
+      v-if="$store.state.username !== freet.author && existingLike()"
       @click="removeLike"
     >
-      💔   Unlike: TODO
+      ♥ {{ numLikes() }}
     </button>
     <section class="alerts">
       <article
@@ -50,20 +47,36 @@ export default {
   methods: {
     numLikes() {
       /**
-       * Update number of likes for a particular freet
+       * Return number of likes for a particular freet
        */
       const allLikes = this.$store.state.likes
       return allLikes.filter(like => like.publishedContent._id === this.freet._id).length;
     },
-    addLike() { //TODOOO make sure to refresh like count
+    existingLike() {
       /**
-       * Creates a like for a freet made by user
+       * Return if user has liked freet
        */
-
-      //TODO error user has already liked in the past
+      const allLikes = this.$store.state.likes
+      const exists = allLikes
+                       .filter(like => like.userLiking === this.$store.state.username)
+                       .filter(filtered =>  filtered.publishedContent._id === this.freet._id)
+                       .length === 1;
+      return exists;
+    },
+    addLike() {
+      /**
+       * Creates a user like for a freet (freet must be authored by another user)
+       */
 
       if (this.$store.state.username === this.freet.author) {
         const error = 'Error: Cannot react to own freet';
+        this.$set(this.alerts, error, 'error'); // Set an alert to be the error text, timeout of 3000 ms
+        setTimeout(() => this.$delete(this.alerts, error), 3000);
+        return;
+      }
+
+      if (this.existingLike()) {
+        const error = 'Error: Cannot like a freet multiple times';
         this.$set(this.alerts, error, 'error'); // Set an alert to be the error text, timeout of 3000 ms
         setTimeout(() => this.$delete(this.alerts, error), 3000);
         return;
@@ -79,15 +92,20 @@ export default {
       };
       this.LikeRequest(params);
     },
-    removeLike() { //TODOOO make sure to refresh like count
+    removeLike() {
       /**
-       * Creates a like for a freet made by user
+       * Removes a user like (Unlike) for a freet (freet must be authored by another user)
        */
-
-       //TODO error if user has not already liked freet
 
       if (this.$store.state.username === this.freet.author) {
         const error = 'Error: Cannot react to own freet';
+        this.$set(this.alerts, error, 'error'); // Set an alert to be the error text, timeout of 3000 ms
+        setTimeout(() => this.$delete(this.alerts, error), 3000);
+        return;
+      }
+
+      if (! this.existingLike()) {
+        const error = 'Error: Cannot unlike a freet you do not currently like';
         this.$set(this.alerts, error, 'error'); // Set an alert to be the error text, timeout of 3000 ms
         setTimeout(() => this.$delete(this.alerts, error), 3000);
         return;
@@ -103,7 +121,7 @@ export default {
       };
       this.LikeRequest(params);
     },
-    async LikeRequest(params) { //TODO--make sure to refresh likes
+    async LikeRequest(params) {
       /**
        * Submits a request to the like's endpoint
        * @param params - Options for the request
@@ -124,8 +142,7 @@ export default {
           throw new Error(res.error);
         }
 
-        this.$store.commit('refreshLikes');
-        this.numLikes();
+        this.$store.commit('refreshLikes'); //refresh number of likes
 
         params.callback();
       } catch (e) {

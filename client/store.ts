@@ -5,7 +5,7 @@ import createPersistedState from 'vuex-persistedstate';
 Vue.use(Vuex);
 
 /**
- * Storage for data that needs to be accessed from various compoentns.
+ * Storage for data that needs to be accessed from various components.
  */
 const store = new Vuex.Store({
   state: {
@@ -53,13 +53,6 @@ const store = new Vuex.Store({
       const url = state.filter ? `/api/users/${state.filter}/freets` : '/api/freets';
       const res = await fetch(url).then(async r => r.json());
       state.freets = res;
-    },
-    updateLikes(state, likes) {
-      /**
-       * Update the stored likes to the provided likes.
-       * @param likes - Likes to store
-       */
-      state.likes = likes;
     },
     async refreshLikes(state) {
       /**
