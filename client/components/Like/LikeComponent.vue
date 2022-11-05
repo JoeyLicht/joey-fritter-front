@@ -55,14 +55,14 @@ export default {
       /**
        * Return number of likes for a particular freet
        */
-      const allLikes = this.$store.state.likes
+      const allLikes = this.$store.state.likes;
       return allLikes.filter(like => like.publishedContent._id === this.freet._id).length;
     },
     existingLike() {
       /**
        * Return if user has liked freet
        */
-      const allLikes = this.$store.state.likes
+      const allLikes = this.$store.state.likes;
       const exists = allLikes
                        .filter(like => like.userLiking === this.$store.state.username)
                        .filter(filtered =>  filtered.publishedContent._id === this.freet._id)

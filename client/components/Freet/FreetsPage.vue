@@ -69,6 +69,7 @@ export default {
   mounted() {
     this.$refs.getFreetsForm.submit();
     this.$store.commit('refreshLikes');
+    this.$store.commit('refreshFullStories');
   }
 };
 </script>

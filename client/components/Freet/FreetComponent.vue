@@ -58,6 +58,11 @@
         :freet="freet"
       />
     </section>
+    <section>
+      <FullStoryComponent
+        :freet="freet"
+      />
+    </section>
     <section class="alerts">
       <article
         v-for="(status, alert, index) in alerts"
@@ -72,10 +77,11 @@
 
 <script>
 import LikeComponent from '@/components/Like/LikeComponent.vue';
+import FullStoryComponent from '@/components/FullStory/FullStoryComponent.vue';
 
 export default {
   name: 'FreetComponent',
-  components: {LikeComponent},
+  components: {LikeComponent, FullStoryComponent},
   props: {
     // Data from the stored freet
     freet: {

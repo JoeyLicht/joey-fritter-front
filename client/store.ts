@@ -12,8 +12,10 @@ const store = new Vuex.Store({
     filter: null, // Username to filter shown freets by (null = show all)
     freets: [], // All freets created in the app
     username: null, // Username of the logged in user
+    usernameId: null, // Username id of the logged in user
     alerts: {}, // global success/error messages encountered during submissions to non-visible forms
-    likes: [] // All likes created in the app
+    likes: [], // All likes created in the app
+    fullStories: [] // All full Stories created in the app
   },
   mutations: {
     alert(state, payload) {
@@ -31,6 +33,13 @@ const store = new Vuex.Store({
        * @param username - new username to set
        */
       state.username = username;
+    },
+    setUsernameId(state, usernameId) {
+      /**
+       * Update the stored username to the specified one.
+       * @param usernameId - new usernameId to set
+       */
+      state.usernameId = usernameId;
     },
     updateFilter(state, filter) {
       /**
@@ -61,6 +70,14 @@ const store = new Vuex.Store({
       const url = '/api/likes';
       const res = await fetch(url).then(async r => r.json());
       state.likes = res;
+    },
+    async refreshFullStories(state) {
+      /**
+       * Request the server for the currently available full stories.
+       */
+      const url = '/api/fullStories';
+      const res = await fetch(url).then(async r => r.json());
+      state.fullStories = res;
     }
   },
   // Store data across page refreshes, only discard on browser close

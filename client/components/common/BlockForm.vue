@@ -13,7 +13,7 @@
       >
         <label :for="field.id">{{ field.label }}:</label>
         <textarea
-          v-if="field.id === 'content'"
+          v-if="field.id === 'content' || field.id === 'fullStoryContent'"
           :name="field.id"
           :value="field.value"
           @input="field.value = $event.target.value"
@@ -62,7 +62,10 @@ export default {
       setUsername: false, // Whether or not stored username should be updated after form submission
       refreshFreets: false, // Whether or not stored freets should be updated after form submission
       alerts: {}, // Displays success/error messages encountered during form submission
-      callback: null // Function to run after successful form submission
+      callback: null, // Function to run after successful form submission
+      fullStoryURL: '', //Freet Type Url to submit to
+      full: '' //content of full story, useful for error checking before freet is created
+
     };
   },
   methods: {
@@ -75,6 +78,18 @@ export default {
         headers: {'Content-Type': 'application/json'},
         credentials: 'same-origin' // Sends express-session credentials with request
       };
+      if (this.fullStoryURL.length) {
+          this.full = this.fields
+                            .filter(field => {
+                                    const {id, value} = field;
+                                    return id === 'fullStoryContent';
+                                  })
+                            .map(field => {
+                                    const {id, value} = field;
+                                    return value;
+                                  })
+      }
+
       if (this.hasBody) {
         options.body = JSON.stringify(Object.fromEntries(
           this.fields.map(field => {
@@ -86,6 +101,12 @@ export default {
       }
 
       try {
+        if (this.fullStoryURL.length) { //check for full story errors before creating the freet
+          if (this.full.toString().split(' ').length > 1000) {
+            throw new Error(`Full Story Content must be less than 1,000 words. Currently it is words ${this.full.toString().split(' ').length}`)
+          }
+        }
+
         const r = await fetch(this.url, options);
         if (!r.ok) {
           // If response is not okay, we throw an error and enter the catch block
@@ -93,14 +114,28 @@ export default {
           throw new Error(res.error);
         }
 
+        if (this.fullStoryURL.length) { //create a full story
+          const freet = await r.json();
+          const fullR = await fetch(`${this.fullStoryURL}/${freet.freet._id}`, options);
+          if (!fullR.ok) {
+            const res = await fullR.json();
+            throw new Error(res.error);
+          }
+        }
+
         if (this.setUsername) {
           const text = await r.text();
           const res = text ? JSON.parse(text) : {user: null};
           this.$store.commit('setUsername', res.user ? res.user.username : null);
+          this.$store.commit('setUsernameId', res.user ? res.user._id : null);
         }
 
         if (this.refreshFreets) {
           this.$store.commit('refreshFreets');
+        }
+
+        if (this.fullStoryURL.length) {
+          this.$store.commit('refreshFullStories');
         }
 
         if (this.callback) {

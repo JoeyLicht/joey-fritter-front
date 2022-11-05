@@ -9,10 +9,13 @@ export default {
   data() {
     return {
       url: '/api/freets',
+      fullStoryURL: '/api/fullStories',
       method: 'POST',
       hasBody: true,
       fields: [
-        {id: 'content', label: 'Content', value: ''}
+        {id: 'content', label: 'Content (Required, 140 character limit)', value: ''},
+        {id: 'fullStoryContent', label: 'Full Story (Optional, 1,000 word limit)', value: ''}
+        // {id: 'freetContentCategory', label: 'Freet Content Category (Required: Politics, Comedy, Sports, Engineering, Happy, Sad)', value: ''}
       ],
       title: 'Create a freet',
       refreshFreets: true,

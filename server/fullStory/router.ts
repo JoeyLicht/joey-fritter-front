@@ -121,11 +121,11 @@ router.patch(
   '/:fullStoryId?',
   [
     userValidator.isUserLoggedIn,
-    fullStoryValidator.isFullStoryDeletable,
-    fullStoryValidator.isValidFullStoryModifier
+    fullStoryValidator.isFullStoryDeletable
   ],
   async (req: Request, res: Response) => {
-    const fullStory = await FullStoryCollection.updateOne(req.params.fullStoryId);
+    const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
+    const fullStory = await FullStoryCollection.updateOne(req.params.fullStoryId, userId);
     res.status(200).json({
       message: 'Your full story was toggled successfully.',
       fullStory: util.constructFullStoryResponse(fullStory)

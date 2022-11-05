@@ -14,7 +14,7 @@ export type FullStory = {
   authorId: Types.ObjectId;
   publishedContent: Types.ObjectId;
   fullStoryContent: string;
-  display: boolean;
+  display: string[];
 };
 
 export type PopulatedFullStory = {
@@ -22,7 +22,7 @@ export type PopulatedFullStory = {
   authorId: User;
   publishedContent: Freet;
   fullStoryContent: string;
-  display: boolean;
+  display: string[];
 };
 
 // Mongoose schema definition for interfacing with a MongoDB table
@@ -50,7 +50,7 @@ const FullStorySchema = new Schema<FullStory>({
   },
   // Display tracks whether to show full story
   display: {
-    type: Boolean,
+    type: [String],
     required: true
   }
 });
