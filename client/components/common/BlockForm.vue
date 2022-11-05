@@ -80,6 +80,7 @@ export default {
         headers: {'Content-Type': 'application/json'},
         credentials: 'same-origin' // Sends express-session credentials with request
       };
+
       if (this.fullStoryURL.length) {
           this.full = this.fields
                             .filter(field => {
@@ -108,65 +109,73 @@ export default {
         options.body = JSON.stringify(Object.fromEntries(
           this.fields.map(field => {
             const {id, value} = field;
-            field.value = '';
+            // field.value = ''; //we will only clear at the end after a success
             return [id, value];
           })
         ));
       }
 
       try {
-        if (this.fullStoryURL.length) { //check for full story errors before creating the freet
-          if (this.full.toString().split(' ').length > 1000) {
-            throw new Error(`Full Story Content must be less than 1,000 words. Currently it is words ${this.full.toString().split(' ').length}`)
-          }
-        }
-
-        if (this.freetTypeURL.length) { //check for full story errors before creating the freet
-          const valid = ['Politics', 'Comedy', 'Sports', 'Engineering', 'Happy', 'Sad'];
-          if (! valid?.includes(this.freetType.toString())) {
-            throw new Error(`Freet Content Category must be one of the preselected categories`)
-          }
-        }
-
-        const r = await fetch(this.url, options);
-        const res = await r.json();
-        if (!r.ok) {
-          // If response is not okay, we throw an error and enter the catch block
-          throw new Error(res.error);
-        }
-
-        if (this.full.toString().length) { //create a full story as long as it isn't empty
-          // const freet = await r.json();
-          const rFull = await fetch(`${this.fullStoryURL}/${res.freet._id}`, options);
-          if (!rFull.ok) {
-            const res = await rFull.json();
-            throw new Error(res.error);
-          }
-        }
-
-        if (this.freetTypeURL.length) { //create a freet type
-          // const freet = await r.json();
-          const rType = await fetch(`${this.freetTypeURL}/${res.freet._id}`, options);
-          if (!rType.ok) {
-            const res = await rType.json();
-            throw new Error(res.error);
-          }
-        }
-
         if (this.setUsername) {
+          const r = await fetch(this.url, options);
+          if (!r.ok) {
+            // If response is not okay, we throw an error and enter the catch block
+            const res = await r.json();
+            throw new Error(res.error);
+          }
           const text = await r.text();
           const res = text ? JSON.parse(text) : {user: null};
           this.$store.commit('setUsername', res.user ? res.user.username : null);
           this.$store.commit('setUsernameId', res.user ? res.user._id : null);
         }
 
-        if (this.refreshFreets) {
+        else if (this.refreshFreets){ //this means we are creating a freet
+          if (this.fullStoryURL.length) { //check for full story errors before creating the freet
+            if (this.full.toString().split(' ').length > 1000) {
+              throw new Error(`Full Story Content must be less than 1,000 words. Currently it is words ${this.full.toString().split(' ').length}`)
+            }
+          }
+
+          if (this.freetTypeURL.length) { //check for full story errors before creating the freet
+            const valid = ['Politics', 'Comedy', 'Sports', 'Engineering', 'Happy', 'Sad'];
+            if (! valid?.includes(this.freetType.toString())) {
+              throw new Error(`Freet Content Category must be one of the preselected categories`)
+            }
+          }
+          
+          const r = await fetch(this.url, options);
+          const res = await r.json();
+
+          if (!r.ok) {
+            // If response is not okay, we throw an error and enter the catch block
+            throw new Error(res.error);
+          }
+
+          if (this.full.toString().length) { //create a full story as long as it isn't empty
+            const rFull = await fetch(`${this.fullStoryURL}/${res.freet._id}`, options);
+            this.$store.commit('refreshFullStories');
+            if (!rFull.ok) {
+              const res = await rFull.json();
+              throw new Error(res.error);
+            }
+          }
+
+          if (this.freetTypeURL.length) { //create a freet type
+            // const freet = await r.json();
+            const rType = await fetch(`${this.freetTypeURL}/${res.freet._id}`, options);
+            this.$store.commit('refreshFreetTypes');
+            if (!rType.ok) {
+              const res = await rType.json();
+              throw new Error(res.error);
+            }
+          }
+
           this.$store.commit('refreshFreets');
         }
 
-        if (this.fullStoryURL.length) {
-          this.$store.commit('refreshFullStories');
-        }
+        this.fields.map(field => { //clear fields
+            field.value = '';
+        });
 
         if (this.callback) {
           this.callback();
