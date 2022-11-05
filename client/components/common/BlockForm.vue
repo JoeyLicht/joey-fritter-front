@@ -64,7 +64,9 @@ export default {
       alerts: {}, // Displays success/error messages encountered during form submission
       callback: null, // Function to run after successful form submission
       fullStoryURL: '', //Freet Type Url to submit to
-      full: '' //content of full story, useful for error checking before freet is created
+      full: '', //content of full story, useful for error checking before freet is created
+      freetTypeURL: '', //Freet Type Url to submit to
+      freetType: '' //content of full story, useful for error checking before freet is created
 
     };
   },
@@ -90,6 +92,18 @@ export default {
                                   })
       }
 
+      if (this.freetTypeURL.length) {
+          this.freetType = this.fields
+                            .filter(field => {
+                                    const {id, value} = field;
+                                    return id === 'freetTypeLabel';
+                                  })
+                            .map(field => {
+                                    const {id, value} = field;
+                                    return value;
+                                  })
+      }
+
       if (this.hasBody) {
         options.body = JSON.stringify(Object.fromEntries(
           this.fields.map(field => {
@@ -107,18 +121,34 @@ export default {
           }
         }
 
+        if (this.freetTypeURL.length) { //check for full story errors before creating the freet
+          const valid = ['Politics', 'Comedy', 'Sports', 'Engineering', 'Happy', 'Sad'];
+          if (! valid?.includes(this.freetType.toString())) {
+            throw new Error(`Freet Content Category must be one of the preselected categories`)
+          }
+        }
+
         const r = await fetch(this.url, options);
+        const res = await r.json();
         if (!r.ok) {
           // If response is not okay, we throw an error and enter the catch block
-          const res = await r.json();
           throw new Error(res.error);
         }
 
         if (this.full.toString().length) { //create a full story as long as it isn't empty
-          const freet = await r.json();
-          const fullR = await fetch(`${this.fullStoryURL}/${freet.freet._id}`, options);
-          if (!fullR.ok) {
-            const res = await fullR.json();
+          // const freet = await r.json();
+          const rFull = await fetch(`${this.fullStoryURL}/${res.freet._id}`, options);
+          if (!rFull.ok) {
+            const res = await rFull.json();
+            throw new Error(res.error);
+          }
+        }
+
+        if (this.freetTypeURL.length) { //create a freet type
+          // const freet = await r.json();
+          const rType = await fetch(`${this.freetTypeURL}/${res.freet._id}`, options);
+          if (!rType.ok) {
+            const res = await rType.json();
             throw new Error(res.error);
           }
         }

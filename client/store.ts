@@ -15,7 +15,8 @@ const store = new Vuex.Store({
     usernameId: null, // Username id of the logged in user
     alerts: {}, // global success/error messages encountered during submissions to non-visible forms
     likes: [], // All likes created in the app
-    fullStories: [] // All full Stories created in the app
+    fullStories: [], // All full Stories created in the app
+    freetTypes: [] // All freet types in the app
   },
   mutations: {
     alert(state, payload) {
@@ -78,6 +79,14 @@ const store = new Vuex.Store({
       const url = '/api/fullStories';
       const res = await fetch(url).then(async r => r.json());
       state.fullStories = res;
+    },
+    async refreshFreetTypes(state) {
+      /**
+       * Request the server for the currently available freet types.
+       */
+      const url = '/api/freetTypes';
+      const res = await fetch(url).then(async r => r.json());
+      state.freetTypes = res;
     }
   },
   // Store data across page refreshes, only discard on browser close

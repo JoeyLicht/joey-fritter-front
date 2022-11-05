@@ -70,6 +70,7 @@ export default {
     this.$refs.getFreetsForm.submit();
     this.$store.commit('refreshLikes');
     this.$store.commit('refreshFullStories');
+    this.$store.commit('refreshFreetTypes');
   }
 };
 </script>

@@ -55,7 +55,6 @@ export default {
       /**
        * Return if a full story exists for a particular freet
        */
-
       const allFulls = this.$store.state.fullStories;
       return allFulls.filter(full => full.publishedContent._id === this.freet._id).length === 1;
     },
@@ -66,7 +65,7 @@ export default {
        if (this.existingFull()) {
         const allFulls = this.$store.state.fullStories;
         const displayIds = allFulls.filter(full => full.publishedContent._id === this.freet._id)[0].display; //there will only be one full story
-        return displayIds.includes(this.$store.state.usernameId)
+        return displayIds?.includes(this.$store.state.usernameId);
       }
       return false
     },
