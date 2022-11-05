@@ -85,21 +85,6 @@ export default {
        * Toggles the full story display mode
        */
 
-       //TODO HANDLE ERRORS
-      // if (this.$store.state.username === this.freet.author) {
-      //   const error = 'Error: Cannot react to own freet';
-      //   this.$set(this.alerts, error, 'error'); // Set an alert to be the error text, timeout of 3000 ms
-      //   setTimeout(() => this.$delete(this.alerts, error), 3000);
-      //   return;
-      // }
-
-      // if (! this.existingLike()) {
-      //   const error = 'Error: Cannot unlike a freet you do not currently like';
-      //   this.$set(this.alerts, error, 'error'); // Set an alert to be the error text, timeout of 3000 ms
-      //   setTimeout(() => this.$delete(this.alerts, error), 3000);
-      //   return;
-      // }
-
       const params = {
         method: 'PATCH',
         message: 'Successfully toggle full story mode!',

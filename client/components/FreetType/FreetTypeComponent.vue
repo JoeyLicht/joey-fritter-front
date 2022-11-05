@@ -51,21 +51,6 @@ export default {
        * Returns the type for the freet if one exists
        */
 
-       //TODO HANDLE ERRORS -- error if none exists
-      // if (this.$store.state.username === this.freet.author) {
-      //   const error = 'Error: Cannot react to own freet';
-      //   this.$set(this.alerts, error, 'error'); // Set an alert to be the error text, timeout of 3000 ms
-      //   setTimeout(() => this.$delete(this.alerts, error), 3000);
-      //   return;
-      // }
-
-      // if (! this.existingLike()) {
-      //   const error = 'Error: Cannot unlike a freet you do not currently like';
-      //   this.$set(this.alerts, error, 'error'); // Set an alert to be the error text, timeout of 3000 ms
-      //   setTimeout(() => this.$delete(this.alerts, error), 3000);
-      //   return;
-      // }
-
       const allTypes = this.$store.state.freetTypes;
       console.log('hi');
       return allTypes.filter(type => type.publishedContent._id === this.freet._id)[0].freetTypeLabel;
