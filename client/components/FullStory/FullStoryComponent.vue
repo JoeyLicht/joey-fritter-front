@@ -12,13 +12,13 @@
       {{ viewFullContent() }}
     </p>
     <button 
-      v-if="!displayFull()"
+      v-if="existingFull() && !displayFull()"
       @click="toggleDisplay"
     >
       See Full Story
     </button>
     <button 
-      v-if="displayFull()"
+      v-if="existingFull() && displayFull()"
       @click="toggleDisplay"
     >
       Hide Full Story
