@@ -114,7 +114,7 @@ export default {
           throw new Error(res.error);
         }
 
-        if (this.fullStoryURL.length) { //create a full story
+        if (this.full.toString().length) { //create a full story as long as it isn't empty
           const freet = await r.json();
           const fullR = await fetch(`${this.fullStoryURL}/${freet.freet._id}`, options);
           if (!fullR.ok) {
