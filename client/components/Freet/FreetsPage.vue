@@ -2,11 +2,13 @@
 
 <template>
   <main>
-    <section v-if="$store.state.username">
+    <section v-if="True">
       <header>
         <h2>Welcome @{{ $store.state.username }}</h2>
       </header>
       <CreateFreetForm />
+      <CreateFeedForm />
+      <UpdateFeedForm />
     </section>
     <section v-else>
       <header>
@@ -26,7 +28,10 @@
         <div class="left">
           <h2>
             Viewing all freets
-            <span v-if="$store.state.filter">
+            <span v-if="$store.state.feedFilter">
+              that match user preference
+            </span>
+            <span v-else-if="$store.state.filter">
               by @{{ $store.state.filter }}
             </span>
           </h2>
@@ -39,6 +44,14 @@
             button="🔄 Get freets"
           />
         </div>
+        <!-- <div class="right">
+          <GetFeedFreetsForm
+            ref="getFeedFreetsForm"
+            value="todo"
+            placeholder="🔍 Todo"
+            button="🔄 Toggle Feed Mode"
+          />
+        </div> -->
       </header>
       <section
         v-if="$store.state.freets.length"
@@ -62,15 +75,21 @@
 import FreetComponent from '@/components/Freet/FreetComponent.vue';
 import CreateFreetForm from '@/components/Freet/CreateFreetForm.vue';
 import GetFreetsForm from '@/components/Freet/GetFreetsForm.vue';
+import CreateFeedForm from '@/components/Feed/CreateFeedForm.vue';
+import UpdateFeedForm from '@/components/Feed/UpdateFeedForm.vue';
+import GetFeedFreetsForm from '@/components/Feed/GetFeedFreetsForm.vue';
 
 export default {
   name: 'FreetPage',
-  components: {FreetComponent, GetFreetsForm, CreateFreetForm},
+  components: {FreetComponent, GetFreetsForm, 
+               CreateFreetForm, CreateFeedForm, 
+               UpdateFeedForm, GetFeedFreetsForm},
   mounted() {
     this.$refs.getFreetsForm.submit();
     this.$store.commit('refreshLikes');
     this.$store.commit('refreshFullStories');
     this.$store.commit('refreshFreetTypes');
+    this.$store.commit('refreshFeeds');
   }
 };
 </script>

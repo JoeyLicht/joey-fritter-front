@@ -61,6 +61,7 @@ export default {
       hasBody: false, // Whether or not form request has a body
       setUsername: false, // Whether or not stored username should be updated after form submission
       refreshFreets: false, // Whether or not stored freets should be updated after form submission
+      refreshFeeds: false, // Whether or not stored feeds should be updated after form submission
       alerts: {}, // Displays success/error messages encountered during form submission
       callback: null, // Function to run after successful form submission
       fullStoryURL: '', //Freet Type Url to submit to
@@ -129,7 +130,7 @@ export default {
           this.$store.commit('setUsernameId', res.user ? res.user._id : null);
         }
 
-        else if (this.refreshFreets){ //this means we are creating a freet
+        else if (this.refreshFreets || this.refreshFeeds){ //this means we are creating a freet
           if (this.fullStoryURL.length) { //check for full story errors before creating the freet
             if (this.full.toString().split(' ').length > 1000) {
               throw new Error(`Full Story Content must be less than 1,000 words. Currently it is words ${this.full.toString().split(' ').length}`)
@@ -170,12 +171,14 @@ export default {
             }
           }
 
-          this.$store.commit('refreshFreets');
-        }
+          if (this.refreshFreets) {
+            this.$store.commit('refreshFreets');
+            this.fields.map(field => field.value = '');
 
-        this.fields.map(field => { //clear fields
-            field.value = '';
-        });
+          } else if (this.refreshFeeds) {
+            this.$store.commit('refreshFeeds');
+          }
+        }
 
         if (this.callback) {
           this.callback();

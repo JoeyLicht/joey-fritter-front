@@ -10,13 +10,15 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     filter: null, // Username to filter shown freets by (null = show all)
+    feedFilter: null, // Special filter to match user's feed preferences
     freets: [], // All freets created in the app
     username: null, // Username of the logged in user
     usernameId: null, // Username id of the logged in user
     alerts: {}, // global success/error messages encountered during submissions to non-visible forms
     likes: [], // All likes created in the app
     fullStories: [], // All full Stories created in the app
-    freetTypes: [] // All freet types in the app
+    freetTypes: [], // All freet types in the app
+    feeds: [] // All freet types in the app
   },
   mutations: {
     alert(state, payload) {
@@ -48,6 +50,13 @@ const store = new Vuex.Store({
        * @param filter - Username of the user to filter freets by
        */
       state.filter = filter;
+    },
+    updateFeedFilter(state, feedFilter) {
+      /**
+       * Update the stored freets filter to the specified one.
+       * @param filter - Username of the user to filter freets by
+       */
+      state.feedFilter = feedFilter;
     },
     updateFreets(state, freets) {
       /**
@@ -87,6 +96,14 @@ const store = new Vuex.Store({
       const url = '/api/freetTypes';
       const res = await fetch(url).then(async r => r.json());
       state.freetTypes = res;
+    },
+    async refreshFeeds(state) {
+      /**
+       * Request the server for the currently available feeds.
+       */
+      const url = '/api/feeds';
+      const res = await fetch(url).then(async r => r.json());
+      state.feeds = res;
     }
   },
   // Store data across page refreshes, only discard on browser close
