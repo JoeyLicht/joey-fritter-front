@@ -29,7 +29,7 @@
           <h2>
             Viewing all freets
             <span v-if="$store.state.feedFilter">
-              that match user preference
+              that match @{{ $store.state.username }}'s preferences
             </span>
             <span v-else-if="$store.state.filter">
               by @{{ $store.state.filter }}
@@ -45,12 +45,7 @@
           />
         </div>
         <div class="right">
-          <GetFeedFreetsForm
-            ref="getFeedFreetsForm"
-            value="todo"
-            placeholder="🔍 Todo"
-            button="🔄 Toggle Feed Mode"
-          />
+          <GetFeedFreetsForm />
         </div>
       </header>
       <section
