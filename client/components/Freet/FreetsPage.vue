@@ -81,10 +81,12 @@ export default {
                UpdateFeedForm, GetFeedFreetsForm},
   mounted() {
     this.$refs.getFreetsForm.submit();
+    this.$store.commit('refreshFeeds');
+    this.$store.commit('refreshFreets');
     this.$store.commit('refreshLikes');
     this.$store.commit('refreshFullStories');
     this.$store.commit('refreshFreetTypes');
-    this.$store.commit('refreshFeeds');
+    
   }
 };
 </script>

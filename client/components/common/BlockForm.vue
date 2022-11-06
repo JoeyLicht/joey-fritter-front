@@ -172,12 +172,16 @@ export default {
           }
 
           if (this.refreshFreets) {
-            this.$store.commit('refreshFreets');
             this.fields.map(field => field.value = '');
 
           } else if (this.refreshFeeds) {
             this.$store.commit('refreshFeeds');
           }
+
+          this.$store.commit('refreshFreets');
+          this.$store.commit('refreshLikes');
+          this.$store.commit('refreshFullStories');
+          this.$store.commit('refreshFreetTypes');
         }
 
         if (this.callback) {

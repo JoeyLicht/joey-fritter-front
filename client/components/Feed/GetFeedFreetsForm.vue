@@ -45,21 +45,7 @@ export default {
     async toggleFeed() {
       this.$store.commit('updateFeedFilter', !this.$store.state.feedFilter);
 
-      const url = this.$store.state.feedFilter ? `/api/feeds` : '/api/freets';
-      // const url = '/api/freets';
-      try {
-        const r = await fetch(url);
-        let res = await r.json();
-        if (!r.ok) {
-          throw new Error(res.error);
-        }
-
-        this.$store.commit('updateFreets', res);
-
-      } catch (e) {
-        this.$set(this.alerts, e, 'error');
-        setTimeout(() => this.$delete(this.alerts, e), 3000);
-      }
+      this.$store.commit('refreshFreets');
     }
   }
 };

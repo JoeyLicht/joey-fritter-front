@@ -69,7 +69,7 @@ const store = new Vuex.Store({
       /**
        * Request the server for the currently available freets.
        */
-      const url = state.filter ? `/api/users/${state.filter}/freets` : '/api/freets';
+      const url = state.filter ? `/api/users/${state.filter}/freets` : state.feedFilter ? `/api/feeds` : '/api/freets';
       const res = await fetch(url).then(async r => r.json());
       state.freets = res;
     },
