@@ -44,14 +44,14 @@
             button="🔄 Get freets"
           />
         </div>
-        <!-- <div class="right">
+        <div class="right">
           <GetFeedFreetsForm
             ref="getFeedFreetsForm"
             value="todo"
             placeholder="🔍 Todo"
             button="🔄 Toggle Feed Mode"
           />
-        </div> -->
+        </div>
       </header>
       <section
         v-if="$store.state.freets.length"
