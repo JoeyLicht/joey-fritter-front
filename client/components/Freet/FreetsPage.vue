@@ -2,7 +2,7 @@
 
 <template>
   <main>
-    <section v-if="True">
+    <section v-if="$store.state.username">
       <header>
         <h2>Welcome @{{ $store.state.username }}</h2>
       </header>
