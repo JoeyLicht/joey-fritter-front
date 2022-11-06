@@ -4,26 +4,29 @@
   <main>
     <section v-if="$store.state.username">
       <header>
-        <h2>Welcome @{{ $store.state.username }}</h2>
+        <h2 id="welcomeLoggedIn">
+          Welcome @{{ $store.state.username }}
+        </h2>
       </header>
       <CreateFreetForm />
       <CreateFeedForm />
       <UpdateFeedForm />
     </section>
     <section v-else>
-      <header>
-        <h2>Welcome to Fritter!</h2>
+      <img 
+        src="../../public/logo.svg"
+      >
+      <header class="welcome">
+        <h2>
+          Welcome to Fritter!
+        </h2>
       </header>
-      <article>
-        <h3>
-          <router-link to="/login">
-            Sign in
-          </router-link>
-          to create, edit, and delete freets.
-        </h3>
-      </article>
+      <section class="signIn">
+        <LoginForm />
+        <RegisterForm />
+      </section>
     </section>
-    <section>
+    <section v-if="$store.state.username">
       <header>
         <div class="left">
           <h2>
@@ -73,12 +76,15 @@ import GetFreetsForm from '@/components/Freet/GetFreetsForm.vue';
 import CreateFeedForm from '@/components/Feed/CreateFeedForm.vue';
 import UpdateFeedForm from '@/components/Feed/UpdateFeedForm.vue';
 import GetFeedFreetsForm from '@/components/Feed/GetFeedFreetsForm.vue';
+import RegisterForm from '@/components/Login/RegisterForm.vue';
+import LoginForm from '@/components/Login/LoginForm.vue';
 
 export default {
   name: 'FreetPage',
   components: {FreetComponent, GetFreetsForm, 
                CreateFreetForm, CreateFeedForm, 
-               UpdateFeedForm, GetFeedFreetsForm},
+               UpdateFeedForm, GetFeedFreetsForm,
+              RegisterForm, LoginForm},
   mounted() {
     this.$refs.getFreetsForm.submit();
     this.$store.commit('refreshFeeds');
@@ -103,10 +109,35 @@ header, header > * {
     align-items: center;
 }
 
+.welcome {
+  color: black;
+  text-align: center;
+  margin: auto;
+  font-size: 2em
+}
+
+
+.signIn * {
+    /* display: flex;
+    flex-direction: row; */
+    text-align: center;
+    color: black;
+}  
+
 button {
     margin-right: 10px;
 }
+*{
+  font-family: cursive;
+}
 
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: auto;
+  width: 10%;
+}
 section .scrollbox {
   flex: 1 0 50vh;
   padding: 3%;

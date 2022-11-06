@@ -11,7 +11,10 @@
       </h1>
     </div>
     <div class="right">
-      <router-link to="/">
+      <router-link
+        v-if="$store.state.username"
+        to="/"
+      >
         Home
       </router-link>
       <router-link
@@ -19,12 +22,6 @@
         to="/account"
       >
         Account
-      </router-link>
-      <router-link
-        v-else
-        to="/login"
-      >
-        Login
       </router-link>
     </div>
     <section class="alerts">

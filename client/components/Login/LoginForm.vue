@@ -27,3 +27,16 @@ export default {
   }
 };
 </script>
+
+
+<style>
+
+h3 {
+  font-size: 1.5em
+}
+
+button {
+   font-family: inherit;
+   font-size: inherit;
+}
+</style>
