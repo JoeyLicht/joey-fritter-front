@@ -57,9 +57,9 @@ class FeedCollection {
       lisPreferences.push('Sad');
     }
 
-    // filter by user preferences and make sure to not include any freet types created by user
+    // filter by user preferences
     const curatedFeed = await FreetTypeModel
-      .find({freetTypeLabel: {$in: lisPreferences}, authorId: {$ne: userIdNum}})
+      .find({freetTypeLabel: {$in: lisPreferences}})
       .sort({dateFreetType: -1})
       .populate('publishedContent').populate('authorId');
 

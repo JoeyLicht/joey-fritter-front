@@ -11,6 +11,8 @@ import * as util from './util';
 import * as freetTypeUtil from '../freetType/util';
 import FeedModel from './model';
 import FreetTypeModel from '../freetType/model';
+import FreetModel from '../freet/model';
+import * as freetUtil from '../freet/util';
 
 const router = express.Router();
 
@@ -100,8 +102,17 @@ router.get(
   async (req: Request, res: Response, next: NextFunction) => {
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
     const curated = await FeedCollection.curateFeed(userId);
-    const response = curated.map(freetTypeUtil.constructFreetTypeResponse);
-    res.status(200).json(response);
+    const response = curated
+                            .map(freetTypeUtil.constructFreetTypeResponse)
+                            .map(x => x.publishedContent._id.toString());
+
+    const curatedFreet = await FreetModel
+          .find({_id: {$in: response}})
+          .sort({dateFreetType: -1})
+          .populate('authorId');
+
+    const newResponse = curatedFreet.map(freetUtil.constructFreetResponse);
+    res.status(200).json(newResponse);
   }
 );
 

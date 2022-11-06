@@ -36,7 +36,11 @@
 
 export default {
   name: 'GetFeedFreetsForm',
-  // data() {},
+  data() {
+    return {
+      alerts: {} // Displays success/error messages encountered during freet modification
+    };
+  },
   methods: {
     async toggleFeed() {
       this.$store.commit('updateFeedFilter', !this.$store.state.feedFilter);
@@ -48,10 +52,6 @@ export default {
         let res = await r.json();
         if (!r.ok) {
           throw new Error(res.error);
-        }
- 
-        if (this.$store.state.feedFilter){
-          res = res.map(r => r.publishedContent);
         }
 
         this.$store.commit('updateFreets', res);
