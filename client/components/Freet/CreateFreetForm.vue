@@ -91,7 +91,7 @@ export default {
       freetType: '', //freet type string
       contentLimit: 140, //content character limit
       fullStoryLimit: 1000, //full story limit
-      fullStoryInput: false, //by default full story does not appear
+      fullStoryInput: true, //by default full story does appear
       fields: [
         {id: 'content', label: 'Content', value: ''},
         {id: 'fullStoryContent', label: 'Full Story', value: ''},
