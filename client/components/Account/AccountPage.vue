@@ -36,3 +36,12 @@ export default {
   }
 };
 </script>
+
+
+<style scoped>
+* {
+  color: black;
+  font-family: cursive;
+}
+
+</style>

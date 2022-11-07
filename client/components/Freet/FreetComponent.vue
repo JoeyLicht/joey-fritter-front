@@ -17,7 +17,7 @@
           🗑️ Delete
         </button>  
         
-        <button
+        <!-- <button
           v-if="editing"
           @click="stopEditing"
         >
@@ -34,7 +34,7 @@
           @click="submitEdit"
         >
           ✅ Save changes
-        </button>
+        </button> -->
       </div>
     </header>
     <textarea

@@ -15,7 +15,19 @@
         v-if="$store.state.username"
         to="/"
       >
-        Home
+        Feed
+      </router-link>
+      <router-link
+        v-if="$store.state.username"
+        to="/createFreet"
+      >
+        Create Freet
+      </router-link>
+      <router-link
+        v-if="$store.state.username"
+        to="/feedPreferences"
+      >
+        Feed Preferences
       </router-link>
       <router-link
         v-if="$store.state.username"
@@ -66,12 +78,17 @@ img {
     gap: 16px;
     grid-auto-flow: column;
     align-items: center;
+    
 }
 
 .right a {
     margin-left: 5px;
 }
 
+* {
+  color: black;
+  font-family: cursive;
+}
 .alerts {
     width: 25%;
 }

@@ -17,7 +17,7 @@ const isValidFullStoryContent = (req: Request, res: Response, next: NextFunction
     return;
   }
 
-  if (fullStoryContent.split(' ').length > 1000) {
+  if (fullStoryContent.split(' ').filter(word => word !== '').length > 1000) {
     res.status(413).json({
       error: 'Full Story content must be no more than 1,000 words'
     });

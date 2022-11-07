@@ -18,7 +18,8 @@ const store = new Vuex.Store({
     likes: [], // All likes created in the app
     fullStories: [], // All full Stories created in the app
     freetTypes: [], // All freet types in the app
-    feeds: [] // All freet types in the app
+    feeds: [], // All freet types in the app
+    authorFreets: [] //All freets the author has created
   },
   mutations: {
     alert(state, payload) {
@@ -69,9 +70,17 @@ const store = new Vuex.Store({
       /**
        * Request the server for the currently available freets.
        */
-      const url = state.filter ? `/api/users/${state.filter}/freets` : state.feedFilter ? `/api/feeds` : '/api/freets';
+      const url = state.feedFilter ? `/api/feeds` : '/api/freets';
       const res = await fetch(url).then(async r => r.json());
       state.freets = res;
+    },
+    async refreshAuthorFreets(state) {
+      /**
+       * Request the server for the currently available author freets.
+       */
+      const url = `/api/freets?author=${state.username}`;
+      const res = await fetch(url).then(async r => r.json());
+      state.authorFreets = res;
     },
     async refreshLikes(state) {
       /**

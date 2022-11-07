@@ -8,9 +8,12 @@
           Welcome @{{ $store.state.username }}
         </h2>
       </header>
-      <CreateFreetForm />
-      <CreateFeedForm />
-      <UpdateFeedForm />
+      <router-link
+        v-if="$store.state.username"
+        to="/createFreet"
+      >
+        Create Freet
+      </router-link>
     </section>
     <section v-else>
       <img 
@@ -39,14 +42,7 @@
             </span>
           </h2>
         </div>
-        <div class="right">
-          <GetFreetsForm
-            ref="getFreetsForm"
-            value="author"
-            placeholder="🔍 Filter by author (optional)"
-            button="🔄 Get freets"
-          />
-        </div>
+      
         <div class="right">
           <GetFeedFreetsForm />
         </div>

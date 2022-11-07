@@ -67,7 +67,7 @@ export default {
       fullStoryURL: '', //Freet Type Url to submit to
       full: '', //content of full story, useful for error checking before freet is created
       freetTypeURL: '', //Freet Type Url to submit to
-      freetType: '' //content of full story, useful for error checking before freet is created
+      freetType: '' //freet type string
 
     };
   },
@@ -152,7 +152,7 @@ export default {
             throw new Error(res.error);
           }
 
-          if (this.full.toString().length) { //create a full story as long as it isn't empty
+          if (this.fullStoryURL.length) { //create a full story
             const rFull = await fetch(`${this.fullStoryURL}/${res.freet._id}`, options);
             this.$store.commit('refreshFullStories');
             if (!rFull.ok) {
@@ -225,7 +225,7 @@ form h3 {
   margin-top: 0;
 }
 
-textarea {
+textarea, input {
    font-family: inherit;
    font-size: inherit;
 }

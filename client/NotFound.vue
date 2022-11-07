@@ -7,9 +7,19 @@
       <p>The page that you requested could not be found.</p>
       <h3>
         <router-link to="/">
-          Return to the home page
+          Return to your feed
         </router-link>
       </h3>
     </section>
   </main>
 </template>
+
+
+
+<style scoped>
+* {
+  color: black;
+  font-family: cursive;
+}
+
+</style>
