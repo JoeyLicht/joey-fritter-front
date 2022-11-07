@@ -175,14 +175,19 @@ export default {
             this.fields.map(field => field.value = '');
 
           } else if (this.refreshFeeds) {
+            this.$store.commit('refreshPreferences');
             this.$store.commit('refreshFeeds');
           }
 
-          this.$store.commit('refreshFreets');
-          this.$store.commit('refreshLikes');
-          this.$store.commit('refreshFullStories');
-          this.$store.commit('refreshFreetTypes');
         }
+
+        this.$store.commit('refreshFreets');
+        this.$store.commit('refreshAuthorFreets');
+        this.$store.commit('refreshLikes');
+        this.$store.commit('refreshFullStories');
+        this.$store.commit('refreshFreetTypes');
+        this.$store.commit('refreshPreferences');
+        this.$store.commit('refreshFeeds');
 
         if (this.callback) {
           this.callback();

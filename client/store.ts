@@ -19,7 +19,8 @@ const store = new Vuex.Store({
     fullStories: [], // All full Stories created in the app
     freetTypes: [], // All freet types in the app
     feeds: [], // All freet types in the app
-    authorFreets: [] //All freets the author has created
+    authorFreets: [], //All freets the author has created
+    preferences: [] //users preferences
   },
   mutations: {
     alert(state, payload) {
@@ -113,6 +114,14 @@ const store = new Vuex.Store({
       const url = '/api/feeds';
       const res = await fetch(url).then(async r => r.json());
       state.feeds = res;
+    },
+    async refreshPreferences(state) {
+      /**
+       * Request the server for the users preferences.
+       */
+      const url = '/api/feeds/preferences';
+      const res = await fetch(url).then(async r => r.json());
+      state.preferences = res;
     }
   },
   // Store data across page refreshes, only discard on browser close

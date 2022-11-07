@@ -7,7 +7,6 @@
         <h2></h2>
       </header>
       <CreateFreetForm />
-      <CreateFreetWithFullForm />
     </section>
     <section v-if="$store.state.username">
       <header>
@@ -39,18 +38,20 @@
         <h3>No freets found.</h3>
       </article>
     </section>
+    <section v-else>
+      <NotFound />
+    </section>
   </main>
 </template>
 
 <script>
 import CreateFreetForm from '@/components/Freet/CreateFreetForm.vue';
-import CreateFreetWithFullForm from '@/components/Freet/CreateFreetWithFullForm.vue';
 import FreetComponent from '@/components/Freet/FreetComponent.vue';
-
+import NotFound from '@/NotFound.vue';
 
 export default {
   name: 'CreateFreetPage',
-  components: {CreateFreetForm, CreateFreetWithFullForm, FreetComponent},
+  components: {CreateFreetForm, FreetComponent, NotFound},
   mounted() {
     this.$store.commit('refreshAuthorFreets');
     this.$store.commit('refreshLikes');

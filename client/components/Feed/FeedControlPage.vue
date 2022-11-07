@@ -3,13 +3,25 @@
 <template>
   <main>
     <section v-if="$store.state.username">
-      <header>
-        <h2>
-          Feed Preferences for @{{ $store.state.username }}
-        </h2>
-      </header>
-      <CreateFeedForm />
-      <UpdateFeedForm />
+      <section v-if="$store.state.preferences.user !== $store.state.username">
+        <header>
+          <h2>
+            Feed Preferences for @{{ $store.state.username }} @{{ $store.state.preferences }} @{{ $store.state.preferences.user !== $store.state.username }}
+          </h2>
+        </header>
+        <CreateFeedForm />
+      </section>
+      <section v-else>
+        <header>
+          <h2>
+            Current Preferences @{{ $store.state.preferences }} @{{ $store.state.preferences.user !== $store.state.username }}
+          </h2>
+        </header>
+        <UpdateFeedForm />
+      </section>
+    </section>
+    <section v-else>
+      <NotFound />
     </section>
   </main>
 </template>
@@ -17,19 +29,14 @@
 <script>
 import CreateFeedForm from '@/components/Feed/CreateFeedForm.vue';
 import UpdateFeedForm from '@/components/Feed/UpdateFeedForm.vue';
-
+import NotFound from '@/NotFound.vue';
 
 export default {
   name: 'FeedControlPage',
-  components: {CreateFeedForm, UpdateFeedForm},
-  // mounted() {
-  //   this.$refs.getFreetsForm.submit();
-  //   this.$store.commit('refreshFeeds');
-  //   this.$store.commit('refreshFreets');
-  //   this.$store.commit('refreshLikes');
-  //   this.$store.commit('refreshFullStories');
-  //   this.$store.commit('refreshFreetTypes');
-  // }
+  components: {CreateFeedForm, UpdateFeedForm, NotFound},
+  mounted() {
+    this.$store.commit('refreshPreferences');
+  }
 };
 </script>
 

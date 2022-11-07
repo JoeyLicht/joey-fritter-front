@@ -13,20 +13,37 @@
         <label v-if="field.id === 'content'">
           {{ field.label }} ({{ inputCharacters(field.value) }} / {{ contentLimit }} characters)
         </label>
-        <label v-else-if="field.id === 'fullStoryContent'">
+        <label v-else-if="field.id === 'fullStoryContent' && fullStoryInput">
           {{ field.label }} ({{ inputWords(field.value) }} / {{ fullStoryLimit }} words)
         </label>
-        <label v-else>
+        <!-- <label v-else-if="field.id === 'fullStoryContent' && !fullStoryInput">
+          Need more than 140 characters and/or want to utilize collapsable content?
+        </label> -->
+        <label v-else-if="field.id === 'freetTypeLabel'">
           {{ field.label }}
         </label>
         <textarea
-          v-if="field.id === 'content' || field.id === 'fullStoryContent'"
+          v-if="field.id === 'content' || (field.id === 'fullStoryContent' && fullStoryInput)"
           :name="field.id"
           :value="field.value"
           @input="field.value = $event.target.value"
         />
+        <button
+          v-if="field.id === 'fullStoryContent' && fullStoryInput"
+          type="button"  
+          @click="toggleFullStory"
+        >
+          Do not need Full Story
+        </button>
+        <button
+          v-if="field.id === 'fullStoryContent' && !fullStoryInput"
+          type="button"  
+          @click="toggleFullStory"
+        >
+          Access more than 140 characters and collapsable content?
+        </button>
         <input
-          v-else
+          v-if="field.id === 'freetTypeLabel'"
           :type="'text'"
           :name="field.id"
           :value="field.value"
@@ -68,14 +85,16 @@ export default {
       hasBody: true, // Whether or not form request has a body
       refreshFreets: true, // Whether or not stored freets should be updated after form submission
       alerts: {}, // Displays success/error messages encountered during form submission
-      fullStoryURL: '', //Freet Type Url to submit to
+      fullStoryURL: '/api/fullStories', //Freet Type Url to submit to
       full: '', //content of full story, useful for error checking before freet is created
       freetTypeURL: '/api/freetTypes', //Freet Type Url to submit to
       freetType: '', //freet type string
       contentLimit: 140, //content character limit
       fullStoryLimit: 1000, //full story limit
+      fullStoryInput: false, //by default full story does not appear
       fields: [
         {id: 'content', label: 'Content', value: ''},
+        {id: 'fullStoryContent', label: 'Full Story', value: ''},
         {id: 'freetTypeLabel', label: 'Freet Content Category (Politics, Comedy, Sports, Engineering, Happy, Sad)', value: ''}
       ],
       title: 'Create a freet',
@@ -88,6 +107,12 @@ export default {
     };
   },
   methods: {
+    toggleFullStory() {
+      /**
+       * Toggle this.fullStoryInput
+       */
+      this.fullStoryInput = ! this.fullStoryInput;
+    },
     inputCharacters(input) {
       /**
        * Returns character length of input (input of all spaces counts as 0)
@@ -116,7 +141,7 @@ export default {
         credentials: 'same-origin' // Sends express-session credentials with request
       };
 
-      if (this.fullStoryURL.length) {
+      if (this.fullStoryInput) {
           this.full = this.fields
                             .filter(field => {
                                     const {id, value} = field;
@@ -151,7 +176,7 @@ export default {
       }
 
       try {
-        if (this.fullStoryURL.length) { //check for full story errors before creating the freet
+        if (this.fullStoryInput) { //check for full story errors before creating the freet
           if (this.full.toString().split(' ').length > 1000) {
             throw new Error(`Full Story Content must be less than 1,000 words. Currently it is words ${this.full.toString().split(' ').length}`)
           }
@@ -172,7 +197,7 @@ export default {
           throw new Error(res.error);
         }
 
-        if (this.fullStoryURL.length) { //create a full story
+        if (this.fullStoryInput) { //create a full story
           const rFull = await fetch(`${this.fullStoryURL}/${res.freet._id}`, options);
           this.$store.commit('refreshFullStories');
           if (!rFull.ok) {
@@ -198,6 +223,7 @@ export default {
         }
 
         this.$store.commit('refreshFreets');
+        this.$store.commit('refreshAuthorFreets');
         this.$store.commit('refreshLikes');
         this.$store.commit('refreshFullStories');
         this.$store.commit('refreshFreetTypes');

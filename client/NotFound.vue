@@ -7,7 +7,7 @@
       <p>The page that you requested could not be found.</p>
       <h3>
         <router-link to="/">
-          Return to your feed
+          Return home
         </router-link>
       </h3>
     </section>

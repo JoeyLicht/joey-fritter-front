@@ -193,6 +193,7 @@ export default {
         this.editing = false;
         this.differentDraft = false;
         this.$store.commit('refreshFreets');
+        this.$store.commit('refreshAuthorFreets');
 
         params.callback();
       } catch (e) {
