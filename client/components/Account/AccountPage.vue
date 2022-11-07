@@ -3,7 +3,7 @@
 
 <template>
   <main>
-    <section v-if="$store.state.preferences.user !== $store.state.username">
+    <section v-if="$store.state.username">
       <section>
         <header>
           <h2>Account settings for @{{ $store.state.username }}</h2>
