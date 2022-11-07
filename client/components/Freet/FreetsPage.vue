@@ -8,12 +8,6 @@
           Welcome @{{ $store.state.username }}
         </h2>
       </header>
-      <router-link
-        v-if="$store.state.username"
-        to="/createFreet"
-      >
-        Create Freet
-      </router-link>
     </section>
     <section v-else>
       <img 
@@ -35,7 +29,7 @@
           <h2>
             Viewing all freets
             <span v-if="$store.state.feedFilter">
-              that match @{{ $store.state.username }}'s preferences
+              that match @{{ $store.state.username }}'s <a href="/#/feedPreferences">preferences</a>
             </span>
             <span v-else-if="$store.state.filter">
               by @{{ $store.state.filter }}
@@ -44,7 +38,17 @@
         </div>
       
         <div class="right">
-          <GetFeedFreetsForm />
+          <section v-if="$store.state.preferences.user === $store.state.username">
+            <GetFeedFreetsForm />
+          </section>
+          <section v-else>
+            <router-link
+              v-if="$store.state.username"
+              to="/feedPreferences"
+            >
+              Select Feed Preferences to Enable Feed Filtering
+            </router-link>
+          </section>
         </div>
       </header>
       <section
