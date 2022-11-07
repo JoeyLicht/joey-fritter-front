@@ -3,19 +3,24 @@
 
 <template>
   <main>
-    <section>
-      <header>
-        <h2>Account settings for @{{ $store.state.username }}</h2>
-      </header>
-      <ChangeUsernameForm />
-      <ChangePasswordForm />
+    <section v-if="$store.state.preferences.user !== $store.state.username">
+      <section>
+        <header>
+          <h2>Account settings for @{{ $store.state.username }}</h2>
+        </header>
+        <ChangeUsernameForm />
+        <ChangePasswordForm />
+      </section>
+      <section>
+        <header>
+          <h2>Account management</h2>
+        </header>
+        <LogoutForm />
+        <DeleteAccountForm />
+      </section>
     </section>
-    <section>
-      <header>
-        <h2>Account management</h2>
-      </header>
-      <LogoutForm />
-      <DeleteAccountForm />
+    <section v-else>
+      <NotFound />
     </section>
   </main>
 </template>
@@ -25,6 +30,7 @@ import ChangeUsernameForm from '@/components/Account/ChangeUsernameForm.vue';
 import ChangePasswordForm from '@/components/Account/ChangePasswordForm.vue';
 import DeleteAccountForm from '@/components/Account/DeleteAccountForm.vue';
 import LogoutForm from '@/components/Account/LogoutForm.vue';
+import NotFound from '@/NotFound.vue';
 
 export default {
   name: 'AccountPage',
@@ -32,7 +38,8 @@ export default {
     ChangeUsernameForm,
     ChangePasswordForm,
     DeleteAccountForm,
-    LogoutForm
+    LogoutForm,
+    NotFound
   }
 };
 </script>
