@@ -2,26 +2,17 @@
 
 <template>
   <main>
-    <section v-if="$store.state.username">
+    <section v-if="$store.state.username && $store.state.username === $store.state.preferences.user">
       <header>
         <h2></h2>
       </header>
       <CreateFreetForm />
     </section>
-    <section v-if="$store.state.username">
+    <section v-if="$store.state.username && $store.state.username === $store.state.preferences.user">
       <header>
-        <div class="left">
-          <h2>
-            Viewing all freets
-            <span>
-              by @{{ $store.state.username }}
-            </span>
-          </h2>
-        </div>
-      
-        <div class="right">
-          <GetFeedFreetsForm />
-        </div>
+        <h2 class="authorFreets">
+          Viewing all freets by @{{ $store.state.username }}
+        </h2>
       </header>
       <section
         v-if="$store.state.authorFreets.length"
@@ -35,7 +26,7 @@
       <article
         v-else
       >
-        <h3>No freets found.</h3>
+        <h3>You must create your first freet to see it here</h3>
       </article>
     </section>
     <section v-else>
@@ -67,14 +58,20 @@ section {
   flex-direction: column;
 }
 
-header, header > * {
+.authorFreets {
+  color: white;
+  text-align: center;
+  margin-top: 1.5em;
+}
+
+/* header, header > * {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
+} */
 
 * {
-  font-family: cursive;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 section .scrollbox {

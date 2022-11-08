@@ -10,7 +10,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     filter: null, // Username to filter shown freets by (null = show all)
-    feedFilter: false, // Special filter to match user's feed preferences
+    feedFilter: true, // Special filter to match user's feed preferences
     freets: [], // All freets created in the app
     username: null, // Username of the logged in user
     usernameId: null, // Username id of the logged in user
@@ -58,7 +58,7 @@ const store = new Vuex.Store({
        * Update the stored freets filter to the specified one.
        * @param filter - Username of the user to filter freets by
        */
-      state.feedFilter = feedFilter;
+      state.feedFilter = true;
     },
     updateFreets(state, freets) {
       /**

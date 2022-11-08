@@ -1,9 +1,11 @@
 <template>
   <div id="app">
-    <header>
+    <header class="navbar">
       <NavBar />
     </header>
-    <router-view />
+    <router-view 
+      class="router"
+    />
   </div>
 </template>
 
@@ -29,8 +31,13 @@ export default {
 </script>
 
 <style>
+
 * {
   box-sizing: border-box;
+}
+
+#app {
+  background-color: black;
 }
 
 body {
@@ -55,6 +62,7 @@ main {
     transform: translate(-50%, 10%);
     width: 100%;
     text-align: center;
+    /* background-color: pink; */
 }
 
 .alerts article {
@@ -69,9 +77,21 @@ main {
 
 .alerts .error {
     background-color: rgb(166, 23, 33);
+    border-radius: .4em;
+    border: 5px solid rgb(166, 23, 33);
+    padding: 0%;
 }
 
 .alerts .success {
     background-color: rgb(45, 135, 87);
+    border-radius: .4em;
+    border: 5px solid rgb(45, 135, 87);
+    padding: 0%;
 }
+
+* {
+  background-color: black;
+}
+
+
 </style>

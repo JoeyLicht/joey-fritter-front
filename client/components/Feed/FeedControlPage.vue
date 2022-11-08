@@ -2,23 +2,13 @@
 
 <template>
   <main>
-    <section v-if="$store.state.username">
-      <section v-if="$store.state.preferences.user !== $store.state.username">
-        <header>
-          <h2>
-            Feed Preferences for @{{ $store.state.username }} @{{ $store.state.preferences }} @{{ $store.state.preferences.user !== $store.state.username }}
-          </h2>
-        </header>
-        <CreateFeedForm />
-      </section>
-      <section v-else>
-        <header>
-          <h2>
-            Current Preferences @{{ $store.state.preferences }} @{{ $store.state.preferences.user !== $store.state.username }}
-          </h2>
-        </header>
-        <UpdateFeedForm />
-      </section>
+    <section v-if="$store.state.preferences.user === $store.state.username">
+      <header>
+        <h2>
+          Feed Settings for @{{ $store.state.username }}
+        </h2>
+      </header>
+      <UpdateFeedForm />
     </section>
     <section v-else>
       <NotFound />
@@ -53,7 +43,7 @@ header, header > * {
 }
 
 * {
-  font-family: cursive;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 section .scrollbox {

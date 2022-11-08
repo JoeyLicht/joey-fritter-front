@@ -6,14 +6,14 @@
     <section v-if="$store.state.username">
       <section>
         <header>
-          <h2>Account settings for @{{ $store.state.username }}</h2>
+          <h2>Account Settings For @{{ $store.state.username }}</h2>
         </header>
         <ChangeUsernameForm />
         <ChangePasswordForm />
       </section>
       <section>
         <header>
-          <h2>Account management</h2>
+          <h2>Account Management</h2>
         </header>
         <LogoutForm />
         <DeleteAccountForm />
@@ -47,8 +47,15 @@ export default {
 
 <style scoped>
 * {
-  color: black;
-  font-family: cursive;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+header {
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  text-align: center;
+  margin-top: 2em;
+  margin-bottom: 2em;
 }
 
 </style>

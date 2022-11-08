@@ -1,10 +1,11 @@
-<!-- Form for creating feeds (block style) -->
+<!-- Form for updating feeds (block style) -->
+
 
 <script>
 import BlockForm from '@/components/common/BlockForm.vue';
 
 export default {
-  name: 'CreateFreedForm',
+  name: 'UpdateFreedForm',
   mixins: [BlockForm],
   data() {
     return {
@@ -12,14 +13,14 @@ export default {
       method: 'PATCH',
       hasBody: true,
       fields: [
-        {id: 'politics', label: 'Politics (Yes/No)', value: ''},
-        {id: 'comedy', label: 'Comedy (Yes/No)', value: ''},
-        {id: 'sports', label: 'Sports (Yes/No)', value: ''},
-        {id: 'engineering', label: 'Engineering (Yes/No)', value: ''},
-        {id: 'happy', label: 'Happy (Yes/No)', value: ''},
-        {id: 'sad', label: 'Sad (Yes/No)', value: ''}
+        {id: 'politics', label: `Politics (Currently Set to ${this.$store.state.preferences.politics ? 'Yes': 'No'})`, value: this.$store.state.preferences.politics ? 'Yes': 'No' },
+        {id: 'comedy', label: `Comedy (Currently Set to ${this.$store.state.preferences.comedy ? 'Yes': 'No'})`, value: this.$store.state.preferences.comedy ? 'Yes': 'No' },
+        {id: 'sports', label: `Sports (Currently Set to ${this.$store.state.preferences.sports ? 'Yes': 'No'})`, value: this.$store.state.preferences.sports ? 'Yes': 'No' },
+        {id: 'engineering', label: `Engineering (Currently Set to ${this.$store.state.preferences.engineering ? 'Yes': 'No'})`, value: this.$store.state.preferences.engineering ? 'Yes': 'No' },
+        {id: 'happy', label: `Happy (Currently Set to ${this.$store.state.preferences.happy ? 'Yes': 'No'})`, value: this.$store.state.preferences.happy ? 'Yes': 'No' },
+        {id: 'sad', label: `Sad (Currently Set to ${this.$store.state.preferences.sad ? 'Yes': 'No'})`, value: this.$store.state.preferences.sad ? 'Yes': 'No' }
       ],
-      title: 'Update your feed',
+      title: 'Update Feed Settings',
       refreshFeeds: true,
       callback: () => {
         const message = 'Successfully updated your feed!';

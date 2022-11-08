@@ -108,7 +108,7 @@ router.get(
 
     const curatedFreet = await FreetModel
           .find({_id: {$in: response}})
-          .sort({dateFreetType: -1})
+          .sort({dateModified: -1})
           .populate('authorId');
 
     const newResponse = curatedFreet.map(freetUtil.constructFreetResponse);

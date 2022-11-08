@@ -2,12 +2,34 @@
 
 <template>
   <main>
-    <section v-if="$store.state.username">
+    <section v-if="$store.state.username && $store.state.username === $store.state.preferences.user">
       <header>
-        <h2 id="welcomeLoggedIn">
-          Welcome @{{ $store.state.username }}
+        <h2>
+          Welcome @{{ $store.state.username }}, You Are Viewing All Freets That Match Your&nbsp <a href="/#/feedPreferences"> Feed Preferences</a>
         </h2>
       </header>
+      <section
+        v-if="$store.state.freets.length"
+      >
+        <FreetComponent
+          v-for="freet in $store.state.freets"
+          :key="freet.id"
+          :freet="freet"
+        />
+      </section>
+      <article
+        v-else
+      >
+        <h3>No match your preferences.</h3>
+      </article>
+    </section>
+    <section v-else-if="$store.state.username && $store.state.username !== $store.state.preferences.user">
+      <header>
+        <h2>
+          In order to access all of fritter's functionality, you must first select your initial feed settings. You selections are not permanent.
+        </h2>
+      </header>
+      <CreateFeedForm />
     </section>
     <section v-else>
       <img 
@@ -22,49 +44,6 @@
         <LoginForm />
         <RegisterForm />
       </section>
-    </section>
-    <section v-if="$store.state.username">
-      <header>
-        <div class="left">
-          <h2>
-            Viewing all freets
-            <span v-if="$store.state.feedFilter">
-              that match @{{ $store.state.username }}'s <a href="/#/feedPreferences">preferences</a>
-            </span>
-            <span v-else-if="$store.state.filter">
-              by @{{ $store.state.filter }}
-            </span>
-          </h2>
-        </div>
-      
-        <div class="right">
-          <section v-if="$store.state.preferences.user === $store.state.username">
-            <GetFeedFreetsForm />
-          </section>
-          <section v-else>
-            <router-link
-              v-if="$store.state.username"
-              to="/feedPreferences"
-            >
-              Select Feed Preferences to Enable Feed Filtering
-            </router-link>
-          </section>
-        </div>
-      </header>
-      <section
-        v-if="$store.state.freets.length"
-      >
-        <FreetComponent
-          v-for="freet in $store.state.freets"
-          :key="freet.id"
-          :freet="freet"
-        />
-      </section>
-      <article
-        v-else
-      >
-        <h3>No freets found.</h3>
-      </article>
     </section>
   </main>
 </template>
@@ -86,7 +65,7 @@ export default {
                UpdateFeedForm, GetFeedFreetsForm,
               RegisterForm, LoginForm},
   mounted() {
-    this.$refs.getFreetsForm.submit();
+    // this.$refs.getFreetsForm.submit();
     this.$store.commit('refreshFeeds');
     this.$store.commit('refreshFreets');
     this.$store.commit('refreshLikes');
@@ -109,38 +88,53 @@ header, header > * {
     align-items: center;
 }
 
-.welcome {
-  color: black;
+main >{
+  background-color: black;
+}
+
+.welcome, header {
+  color: white;
   text-align: center;
   margin: auto;
-  font-size: 2em
+  font-size: .8em
 }
 
 
 .signIn * {
     /* display: flex;
     flex-direction: row; */
-    text-align: center;
-    color: black;
+    /* text-align: center; */
+    /* color: black; */
 }  
 
 button {
     margin-right: 10px;
 }
 *{
-  font-family: cursive;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 img {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  height: auto;
-  width: 10%;
+  height: 5em;
+  width: auto;
+  filter: invert(100%);
+  background-color: transparent;
+  margin-top: 2em
 }
 section .scrollbox {
   flex: 1 0 50vh;
   padding: 3%;
   overflow-y: scroll;
+}
+
+.welcome {
+  font-size: 1.4em;
+}
+
+a {
+  color: white 
 }
 </style>

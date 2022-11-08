@@ -67,6 +67,7 @@
     <article v-else>
       <p>{{ content }}</p>
     </article>
+
     <button
       type="submit"
     >
@@ -255,13 +256,33 @@ export default {
 
 <style scoped>
 form {
-  border: 1px solid #111;
+  border: 3px solid white;
   padding: 0.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   margin-bottom: 14px;
   position: relative;
+  background-color: #202020;
+  color: white;
+  border-radius: .4em;
+}
+
+textarea, input, button {
+  background-color: #606060;
+  border-radius: .4em;
+  color: white;
+  border-color: white;
+  border: 1px 
+}
+
+input, button {
+  border-color: white;
+  /* border: 1px solid white */
+}
+
+button {
+  border: 3px solid white
 }
 
 article > div {
@@ -282,11 +303,22 @@ form h3 {
   margin-top: 0;
 }
 
+.alerts p {
+  border-radius: .4em;
+}
+
+h3 {
+  text-align: center;
+}
+
+h3, label, p, div {
+  background-color: #202020;
+}
+
 textarea, input {
    font-family: inherit;
    font-size: inherit;
 }
-
 /* Switch per: https://codepen.io/EssSaibot/pen/zZmZbP
 
 
@@ -301,11 +333,16 @@ body {
   display: inline-block;
   width: 60px;
   height: 34px;
+  margin-bottom: 5px;
 }
 
 .switch input {
   display: none;
 }
+
+/* h3{
+  align-items: center;
+} */
 
 .slider {
   position: absolute;
@@ -315,7 +352,7 @@ body {
   right: 0;
   bottom: 0;
   /* background-color: #ccc; */
-  background-color: black;
+  background-color: #0BDA51;
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
@@ -333,7 +370,7 @@ body {
 }
 
 input:checked + .slider {
-  background-color: #ccc
+  background-color: red
 }
 
 input:focus + .slider {
@@ -352,6 +389,10 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+h3 {
+  text-align: center;
 }
 
 </style>

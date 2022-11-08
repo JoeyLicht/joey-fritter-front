@@ -18,6 +18,22 @@
           :value="field.value"
           @input="field.value = $event.target.value"
         />
+        <!-- <div v-else-if="['politics', 'comedy', 'sports', 'engineering', 'happy', 'sad'].includes(field.id)">
+          <button
+            v-if="field.value === 'Yes'"
+            type="button"
+            @input="field.value = 'No'"
+          >
+            Change to No
+          </button>
+          <button
+            v-else
+            type="button"
+            @input="field.value = 'Yes'"
+          >
+            Change to Yes
+          </button>
+        </div> -->
         <input
           v-else
           :type="field.id === 'password' ? 'password' : 'text'"
@@ -192,10 +208,16 @@ export default {
         if (this.callback) {
           this.callback();
         }
+
+        if (this.refreshFeeds){ //take user back to home page after updating their preferences
+          setTimeout(() => this.$router.push('/'), 1000);
+          // this.$router.push('/');
+        } 
       } catch (e) {
         this.$set(this.alerts, e, 'error');
         setTimeout(() => this.$delete(this.alerts, e), 3000);
       }
+      
     }
   }
 };
@@ -203,13 +225,33 @@ export default {
 
 <style scoped>
 form {
-  border: 1px solid #111;
+  border: 3px solid white;
   padding: 0.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   margin-bottom: 14px;
   position: relative;
+  background-color: #202020;
+  color: white;
+  border-radius: .4em;
+}
+
+textarea, input, button {
+  background-color: #606060;
+  border-radius: .4em;
+  color: white;
+  border-color: white;
+  border: 1px 
+}
+
+input, button {
+  border-color: white;
+  /* border: 1px solid white */
+}
+
+button {
+  border: 3px solid white
 }
 
 article > div {
@@ -228,6 +270,18 @@ form > * {
 
 form h3 {
   margin-top: 0;
+}
+
+.alerts p {
+  border-radius: .4em;
+}
+
+h3 {
+  text-align: center;
+}
+
+h3, label, p, div {
+  background-color: #202020;
 }
 
 textarea, input {

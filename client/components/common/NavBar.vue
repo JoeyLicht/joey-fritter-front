@@ -13,24 +13,28 @@
     <div class="right">
       <router-link
         v-if="$store.state.username"
+        class="links"
         to="/"
       >
         Feed
       </router-link>
       <router-link
-        v-if="$store.state.username"
+        v-if="$store.state.username && $store.state.username === $store.state.preferences.user"
+        class="links"
         to="/createFreet"
       >
         Create Freet
       </router-link>
       <router-link
-        v-if="$store.state.username"
+        v-if="$store.state.preferences.user === $store.state.username"
+        class="links"
         to="/feedPreferences"
       >
         Feed Preferences
       </router-link>
       <router-link
         v-if="$store.state.username"
+        class="links"
         to="/account"
       >
         Account
@@ -49,45 +53,62 @@
 </template>
 
 <style scoped>
+
 nav {
-    padding: 1vw 2vw;
-    background-color: #ccc;
+    padding: .2vw 2vw;
+    background-color: #606060;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative;
+    position: static;
+    border-bottom-left-radius: .4em;
+    border-bottom-right-radius: .4em;
 }
 
 .title {
-    font-size: 32px;
+    /* font-size: 32px; */
     margin: 0 5px;
 }
 
 img {
-    height: 32px;
+    height: .12em;
+    font-size: 12em;
+    filter: invert(100%);
+    background-color: transparent;
 }
 
 .left {
 	display: flex;
 	align-items: center;
+  gap: 0.25em;
 }
 
 .right {
-    font-size: 20px;
+    /* font-size: 1.2em; */
     display: grid;
-    gap: 16px;
+    gap: 1.3em;
     grid-auto-flow: column;
     align-items: center;
-    
 }
 
-.right a {
-    margin-left: 5px;
+/* Change the color of links on hover */
+.right a:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+.links {
+    text-decoration: none;
+}
+.right  {
+    margin-left: px;
 }
 
 * {
-  color: black;
-  font-family: cursive;
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1.1em;
+  background-color: #606060;
 }
 .alerts {
     width: 25%;

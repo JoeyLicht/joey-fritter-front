@@ -132,9 +132,23 @@ export default {
 </script>
 
 <style scoped>
-.freet {
-    border: 1px solid #111;
-    padding: 20px;
-    position: relative;
+
+.content {
+  color: pink;
 }
+
+textarea, input, button {
+  background-color: #606060;
+  border-radius: .4em;
+  color: white;
+  border-color: white;
+  border: 1px 
+}
+
+input, button {
+  border-color: white;
+  /* border: 1px solid white */
+}
+
+
 </style>

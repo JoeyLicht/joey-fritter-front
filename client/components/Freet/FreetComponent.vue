@@ -9,33 +9,12 @@
       <h3 class="author">
         @{{ freet.author }}
       </h3>
-      <div
-        v-if="$store.state.username === freet.author"
-        class="actions"
-      >
-        <button @click="deleteFreet">
-          🗑️ Delete
-        </button>  
-        
-        <!-- <button
-          v-if="editing"
-          @click="stopEditing"
-        >
-          🚫 Discard changes
-        </button>
-        <button
-          v-if="!editing"
-          @click="startEditing"
-        >
-          ✏️ Edit
-        </button>
-        <button 
-          v-if="differentDraft"
-          @click="submitEdit"
-        >
-          ✅ Save changes
-        </button> -->
-      </div>
+      <FullStoryComponent
+        :freet="freet"
+      /> 
+      <p class="info">
+        {{ formatDate(freet.dateModified) }}
+      </p>
     </header>
     <textarea
       v-if="editing"
@@ -49,25 +28,23 @@
     >
       {{ freet.content }}
     </p>
-    <p class="info">
-      Posted at {{ freet.dateModified }}
-      <i v-if="freet.edited">(edited)</i>
-    </p>
-    <section>
-      <LikeComponent
-        :freet="freet"
-      />
-    </section>
-    <section>
-      <FullStoryComponent
-        :freet="freet"
-      />
-    </section>
-    <section>
-      <FreetTypeComponent
-        :freet="freet"
-      />
-    </section>
+    <LikeComponent
+      class="like"
+      :freet="freet"
+    />
+    <FullStoryComponent
+      :freet="freet"
+    />
+    <FreetTypeComponent
+      :freet="freet"
+    />
+    <button 
+      v-if="$store.state.username === freet.author"
+      class="actions"
+      @click="deleteFreet"
+    >
+      Delete
+    </button>  
     <section class="alerts">
       <article
         v-for="(status, alert, index) in alerts"
@@ -104,9 +81,11 @@ export default {
     };
   },
   methods: {
-    // handleInit() {
-
-    // },
+    formatDate(date) {
+      const res = date.split(',');
+      console.log('hi');
+      return res[0];
+    },
     startEditing() {
       /**
        * Enables edit mode on this freet.
@@ -207,8 +186,61 @@ export default {
 
 <style scoped>
 .freet {
-    border: 1px solid #111;
+    /* border: 1px solid white;
     padding: 20px;
-    position: relative;
+    position: relative; */
+  border: 3px solid white;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  position: relative;
+  background-color: #202020;
+  color: yellow;
+  border-radius: .4em;
 }
+
+.like {
+  color: red;
+  background-color: blue;
+}
+
+textarea, input, button {
+  background-color: #606060;
+  border-radius: .4em;
+  color: white;
+  border-color: white;
+  border: 1px 
+}
+
+.actions {
+  background-color: red;
+  display: flex;
+  align-items: row;
+  justify-content: space-between;
+  align-items: center;
+  text-align: ;
+}
+
+input, button {
+  border-color: white;
+  /* border: 1px solid white */
+}
+
+header {
+  display: flex;
+  align-items: row;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  background-color: #202020;
+  margin-left: 2em;
+  margin-right: 2em
+}
+
+article {
+  background-color: white;
+}
+
 </style>

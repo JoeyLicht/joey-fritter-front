@@ -4,7 +4,7 @@
 import BlockForm from '@/components/common/BlockForm.vue';
 
 export default {
-  name: 'CreateFreedForm',
+  name: 'CreateFeedForm',
   mixins: [BlockForm],
   data() {
     return {
