@@ -18,8 +18,8 @@
 
 <style scoped>
 * {
-  color: black;
-  font-family: cursive;
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 </style>
