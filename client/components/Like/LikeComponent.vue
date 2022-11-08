@@ -23,7 +23,7 @@
     >
       &#9829; {{ numLikes() }}
     </button>
-    <section class="alerts">
+    <!-- <section class="alerts">
       <article
         v-for="(status, alert, index) in alerts"
         :key="index"
@@ -31,7 +31,7 @@
       >
         <p>{{ alert }}</p>
       </article>
-    </section>
+    </section> -->
   </article>
 </template>
 

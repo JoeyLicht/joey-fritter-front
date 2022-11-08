@@ -84,7 +84,6 @@ export default {
       full: '', //content of full story, useful for error checking before freet is created
       freetTypeURL: '', //Freet Type Url to submit to
       freetType: '' //freet type string
-
     };
   },
   methods: {

@@ -10,7 +10,10 @@
     </section>
     <section v-if="$store.state.username && $store.state.username === $store.state.preferences.user">
       <header>
-        <h2 class="authorFreets">
+        <h2 
+          v-if="$store.state.authorFreets.length"  
+          class="authorFreets"
+        >
           Viewing all freets by @{{ $store.state.username }}
         </h2>
       </header>
@@ -73,6 +76,15 @@ section {
 * {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
+
+h3 {
+  color: white;
+  text-align: center;
+  margin: auto;
+  margin-top: 3em;
+
+}
+
 
 section .scrollbox {
   flex: 1 0 50vh;

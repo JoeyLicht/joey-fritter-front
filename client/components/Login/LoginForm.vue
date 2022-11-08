@@ -17,12 +17,12 @@ export default {
         {id: 'password', label: 'Password', value: ''}
       ],
       title: 'Sign in',
-      callback: () => {
-        this.$router.push({name: 'Home'});
-        this.$store.commit('alert', {
-          message: 'You are now signed in!', status: 'success'
-        });
-      }
+      // callback: () => {
+      //   this.$router.push({name: 'Home'});
+      //   this.$store.commit('alert', {
+      //     message: 'You are now signed in!', status: 'success'
+      //   });
+      // }
     };
   }
 };

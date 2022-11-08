@@ -5,7 +5,7 @@
     <section v-if="$store.state.preferences.user === $store.state.username">
       <header>
         <h2>
-          Feed Settings for @{{ $store.state.username }}
+          @{{ $store.state.username }}'s Current Feed Settings Filled In
         </h2>
       </header>
       <UpdateFeedForm />
@@ -40,6 +40,13 @@ header, header > * {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+h2 {
+  color: white;
+  text-align: center;
+  margin: auto;
+  margin-bottom: 1em;
 }
 
 * {
