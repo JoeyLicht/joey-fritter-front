@@ -65,13 +65,12 @@ export default {
                UpdateFeedForm, GetFeedFreetsForm,
               RegisterForm, LoginForm},
   mounted() {
-    this.$refs.getFreetsForm.submit();
+    // this.$refs.getFreetsForm.submit();
     this.$store.commit('refreshFeeds');
     this.$store.commit('refreshFreets');
     this.$store.commit('refreshLikes');
     this.$store.commit('refreshFullStories');
     this.$store.commit('refreshFreetTypes');
-    
   }
 };
 </script>

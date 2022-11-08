@@ -85,7 +85,6 @@ export default {
   methods: {
     formatDate(date) {
       const res = date.split(',');
-      console.log('hi');
       return res[0];
     },
     startEditing() {

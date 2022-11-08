@@ -52,7 +52,6 @@ export default {
        */
 
       const allTypes = this.$store.state.freetTypes;
-      console.log('hi');
       return allTypes.filter(type => type.publishedContent._id === this.freet._id)[0].freetTypeLabel;
     }
   }
