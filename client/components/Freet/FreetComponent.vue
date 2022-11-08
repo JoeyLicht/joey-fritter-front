@@ -11,7 +11,14 @@
       </h3>
       
       <p class="info">
-        {{ formatDate(freet.dateModified) }}
+        <button 
+          v-if="$store.state.username === freet.author"
+          class="delete"
+          @click="deleteFreet"
+        >
+          Delete Freet
+        </button> 
+        &nbsp {{ formatDate(freet.dateModified) }}
       </p>
     </header>
     <textarea
@@ -35,13 +42,6 @@
         class="like"
         :freet="freet"
       />
-      <button 
-        v-if="$store.state.username === freet.author"
-        class="delete"
-        @click="deleteFreet"
-      >
-        Delete Freet
-      </button> 
       <FreetTypeComponent
         class="freetType"
         :freet="freet"
@@ -231,22 +231,16 @@ header, h3, p {
   color: white;
 }
 
-
+.info {
+  display: flex;
+  align-items: row;
+  justify-content: space-between;
+  align-items: center;
+}
 .fullStory {
   margin-left: 2em;
   margin-top: 1px;
 }
-
-.delete {
-  background-color: #202020;
-  display: flex;
-  align-items: right;
-  /* width: 10%; */
-  /* margin-left: 2em; */
-  text-align: center;
-  border: 2px solid white;
-}
-
 
 input, button {
   border-color: white;
