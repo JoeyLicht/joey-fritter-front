@@ -60,9 +60,9 @@ export default {
 </script>
 
 <style scoped>
-.freet {
-    border: 1px solid #111;
-    padding: 20px;
-    position: relative;
+
+p, .freetType {
+  background-color: #202020;
 }
+
 </style>

@@ -9,9 +9,7 @@
       <h3 class="author">
         @{{ freet.author }}
       </h3>
-      <FullStoryComponent
-        :freet="freet"
-      /> 
+      
       <p class="info">
         {{ formatDate(freet.dateModified) }}
       </p>
@@ -28,23 +26,27 @@
     >
       {{ freet.content }}
     </p>
-    <LikeComponent
-      class="like"
-      :freet="freet"
-    />
     <FullStoryComponent
+      class="fullStory"
       :freet="freet"
     />
-    <FreetTypeComponent
-      :freet="freet"
-    />
-    <button 
-      v-if="$store.state.username === freet.author"
-      class="actions"
-      @click="deleteFreet"
-    >
-      Delete
-    </button>  
+    <div class="bottom">
+      <LikeComponent
+        class="like"
+        :freet="freet"
+      />
+      <button 
+        v-if="$store.state.username === freet.author"
+        class="delete"
+        @click="deleteFreet"
+      >
+        Delete Freet
+      </button> 
+      <FreetTypeComponent
+        class="freetType"
+        :freet="freet"
+      /> 
+    </div>
     <section class="alerts">
       <article
         v-for="(status, alert, index) in alerts"
@@ -197,13 +199,13 @@ export default {
   margin-bottom: 14px;
   position: relative;
   background-color: #202020;
-  color: yellow;
+  color: white;
   border-radius: .4em;
 }
 
 .like {
   color: red;
-  background-color: blue;
+  background-color: #202020;
 }
 
 textarea, input, button {
@@ -214,21 +216,44 @@ textarea, input, button {
   border: 1px 
 }
 
-.actions {
-  background-color: red;
-  display: flex;
-  align-items: row;
-  justify-content: space-between;
-  align-items: center;
-  text-align: ;
+header, h3, p {
+  background-color: #202020;
 }
+
+.content {
+  background-color: #202020;
+  border: 3px solid white;
+  border-radius: .4em;
+  margin-left: 2em;
+  margin-right: 2em;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: white;
+}
+
+
+.fullStory {
+  margin-left: 2em;
+  margin-top: 1px;
+}
+
+.delete {
+  background-color: #202020;
+  display: flex;
+  align-items: right;
+  /* width: 10%; */
+  /* margin-left: 2em; */
+  text-align: center;
+  border: 2px solid white;
+}
+
 
 input, button {
   border-color: white;
   /* border: 1px solid white */
 }
 
-header {
+header, .bottom {
   display: flex;
   align-items: row;
   justify-content: space-between;

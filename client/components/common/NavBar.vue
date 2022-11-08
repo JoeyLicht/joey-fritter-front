@@ -56,7 +56,7 @@
 
 nav {
     padding: .2vw 2vw;
-    background-color: #606060;
+    background-color: #202020;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -108,7 +108,7 @@ img {
   color: white;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 1.1em;
-  background-color: #606060;
+  background-color: #202020;
 }
 .alerts {
     width: 25%;

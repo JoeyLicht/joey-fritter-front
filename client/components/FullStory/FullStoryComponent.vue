@@ -23,6 +23,7 @@
     >
       Hide Full Story
     </button>
+    
     <section class="alerts">
       <article
         v-for="(status, alert, index) in alerts"
@@ -134,7 +135,7 @@ export default {
 <style scoped>
 
 .content {
-  color: pink;
+  color: white;
 }
 
 textarea, input, button {
@@ -148,6 +149,26 @@ textarea, input, button {
 input, button {
   border-color: white;
   /* border: 1px solid white */
+}
+
+.fullStory, p {
+  background-color: #202020;
+}
+
+/* button {
+  border: 2px solid white;
+} */
+
+p {
+  background-color: #202020;
+  border: 3px solid white;
+  border-radius: .4em;
+  /* margin-left: 2em; */
+  margin-right: 2em;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: white;
+
 }
 
 

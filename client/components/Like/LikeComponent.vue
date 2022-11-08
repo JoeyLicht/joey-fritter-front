@@ -9,19 +9,19 @@
       v-if="$store.state.username === freet.author || $store.state.username === null" 
       class="num-likes"
     >
-      ♥ {{ numLikes() }}
+      &#9829; {{ numLikes() }}
     </p>
     <button 
       v-if="$store.state.username !== freet.author && $store.state.username !== null && ! existingLike()"
       @click="addLike"
     >
-      ♡ {{ numLikes() }}
+      &#9825; {{ numLikes() }}
     </button>
     <button 
       v-if="$store.state.username !== freet.author && $store.state.username !== null && existingLike()"
       @click="removeLike"
     >
-      ♥ {{ numLikes() }}
+      &#9829; {{ numLikes() }}
     </button>
     <section class="alerts">
       <article
@@ -162,9 +162,24 @@ export default {
 </script>
 
 <style scoped>
-.freet {
+/* .freet {
     border: 1px solid #111;
     padding: 20px;
     position: relative;
+} */
+
+p, button {
+  background-color: #202020;
+  color: red;
 }
+
+button {
+  border-radius: 3em;
+  border: 2px solid red;
+}
+
+.alerts {
+  color: white;
+}
+
 </style>
