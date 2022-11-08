@@ -194,6 +194,9 @@ export default {
           if (this.full.toString().split(' ').length > 1000) {
             throw new Error(`Full Story Content must be less than 1,000 words. Currently it is words ${this.full.toString().split(' ').length}`)
           }
+          if (!this.full.toString().trim()) {
+            throw new Error(`Full Story Content must be at least 1 word. Click the green toggle if you do not want to use the Full Story feature.`)
+          }
         }
 
         if (this.freetTypeURL.length) { //check for full story errors before creating the freet
@@ -247,7 +250,7 @@ export default {
       }
       } catch (e) {
         this.$set(this.alerts, e, 'error');
-        setTimeout(() => this.$delete(this.alerts, e), 3000);
+        setTimeout(() => this.$delete(this.alerts, e), 5000);
       }
     }
   }
